@@ -68,6 +68,9 @@
 @property (strong) UIColor *autoCompleteTableCellTextColor;
 
 
+@property (strong) UIView *overView;
+
+
 - (void)registerAutoCompleteCellNib:(UINib *)nib forCellReuseIdentifier:(NSString *)reuseIdentifier;
 
 - (void)registerAutoCompleteCellClass:(Class)cellClass forCellReuseIdentifier:(NSString *)reuseIdentifier;
