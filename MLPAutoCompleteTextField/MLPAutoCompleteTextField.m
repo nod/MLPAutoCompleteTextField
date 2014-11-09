@@ -442,25 +442,15 @@ withAutoCompleteString:(NSString *)string
                                    willShowAutoCompleteTableView:self.autoCompleteTableView];
             }
         }
-
-        [self.superview bringSubviewToFront:self];
-
-
         if (_overView) {
             [_overView addSubview:_autoCompleteTableView];
             [_overView bringSubviewToFront:_autoCompleteTableView];
         } else {
             UIView *rootView = [self.window.subviews objectAtIndex:0];
+            [self.superview bringSubviewToFront:self];
             [rootView insertSubview:self.autoCompleteTableView
                        belowSubview:self];
         }
-        // reset the frame because it's wonky after we muck with the superview
-        CGFloat x = self.frame.origin.x;
-        CGFloat y = self.frame.origin.y;
-        _autoCompleteTableView.frame = CGRectMake(x, y,
-                                                  _autoCompleteTableView.frame.size.width,
-                                                  _autoCompleteTableView.frame.size.height);
-
         [self.autoCompleteTableView setUserInteractionEnabled:YES];
         if(self.showTextFieldDropShadowWhenAutoCompleteTableIsOpen){
             [self.layer setShadowColor:[[UIColor blackColor] CGColor]];
@@ -732,7 +722,9 @@ withAutoCompleteString:(NSString *)string
                afterDelay:self.autoCompleteFetchRequestDelay];
 }
 
+
 #pragma mark - Getters
+
 
 - (BOOL)autoCompleteTableViewHidden
 {
@@ -758,8 +750,8 @@ withAutoCompleteString:(NSString *)string
 }
 
 
-
 #pragma mark - Factory Methods
+
 
 - (UITableView *)newAutoCompleteTableViewForTextField:(MLPAutoCompleteTextField *)textField
 {
@@ -774,6 +766,7 @@ withAutoCompleteString:(NSString *)string
 
     return newTableView;
 }
+
 
 - (CGRect)autoCompleteTableViewFrameForTextField:(MLPAutoCompleteTextField *)textField
                                  forNumberOfRows:(NSInteger)numberOfRows
@@ -798,6 +791,7 @@ withAutoCompleteString:(NSString *)string
     return newTableViewFrame;
 }
 
+
 - (CGFloat)autoCompleteTableHeightForTextField:(MLPAutoCompleteTextField *)textField
                               withNumberOfRows:(NSInteger)numberOfRows
 {
@@ -812,6 +806,7 @@ withAutoCompleteString:(NSString *)string
     CGFloat height = textField.autoCompleteRowHeight * heightMultiplier;
     return height;
 }
+
 
 - (CGRect)autoCompleteTableViewFrameForTextField:(MLPAutoCompleteTextField *)textField
 {
@@ -830,6 +825,7 @@ withAutoCompleteString:(NSString *)string
 
     return frame;
 }
+
 
 - (NSAttributedString *)boldedString:(NSString *)string withRange:(NSRange)boldRange
 {
@@ -863,13 +859,10 @@ withAutoCompleteString:(NSString *)string
 @end
 
 
-
-
-
-
-
 #pragma mark -
 #pragma mark - MLPAutoCompleteFetchOperation
+
+
 @implementation MLPAutoCompleteFetchOperation{
     dispatch_semaphore_t sentinelSemaphore;
 }
